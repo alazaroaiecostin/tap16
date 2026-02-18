@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>tap16</title>
+
+  <!-- Vite injects HMR automatically when running dev -->
+</head>
+<body>
+
+<header id="topbar">
+  <div class="left">
+    <button id="play">▶</button>
+    <button id="stop">■</button>
+    <button id="undo">↶</button>
+    <button id="redo">↷</button>
+
+    <label>Mode</label>
+    <select id="playMode">
+      <option value="pattern">Pattern</option>
+      <option value="song">Song</option>
+    </select>
+
+    <label style="margin-left:8px;">
+  <input type="checkbox" id="loopSong" />
+  Loop Song
+</label>
+
+
+    <label>BPM</label>
+    <input id="bpm" type="number" min="30" max="300" value="120"/>
+
+    <label>Time</label>
+    <select id="timeSig">
+      <option>4/4</option>
+      <option>3/4</option>
+      <option>5/8</option>
+      <option>6/8</option>
+      <option>7/8</option>
+    </select>
+
+    <label>Grid</label>
+    <select id="resolution">
+      <option value="4n">1/4</option>
+      <option value="4t">1/4T</option>
+      <option value="8n">1/8</option>
+      <option value="16n" selected>1/16</option>
+      <option value="32n">1/32</option>
+      <option value="64n">1/64</option>
+      <option value="8t">1/8T</option>
+      <option value="16t">1/16T</option>
+      <option value="32t">1/32T</option>
+    </select>
+  </div>
+
+  <div class="right">
+    <button id="save">Save</button>
+    <button id="load">Load</button>
+
+    <select id="exportFormat">
+  <option value="wav">WAV</option>
+  <option value="zip">Project ZIP</option>
+</select>
+    <button id="export">Export</button>
+  </div>
+
+  <input id="importZip" type="file" accept=".zip" hidden />
+<button id="importZipBtn">Import ZIP</button>
+</header>
+
+<section id="workspace">
+
+  <aside id="instruments">
+    <header>Instruments</header>
+
+    <div id="lanes"></div>
+
+    <button id="addLane">+ Add Lane</button>
+
+    <!-- Hidden file picker -->
+    <input
+      id="sampleInput"
+      type="file"
+      accept="audio/*"
+      multiple
+      hidden
+    />
+    <input id="loadInput" type="file" accept="application/json" hidden />
+  </aside>
+
+  <main id="editor">
+    <section id="patterns">
+      <header>
+        <span>Patterns</span>
+        <select id="patternSelect"></select>
+        <button id="newPattern">+</button>
+        <button id="dupPattern">⧉</button>
+      </header>
+
+      <!-- Pattern chips -->
+      <div id="arranger"></div>
+      <div id="arrangerTimeline" style="display:flex; gap:6px; padding:6px;"></div>
+
+      <!-- Song arranger timeline -->
+    </section>
+
+    <section id="gridWrap">
+      <div id="grid"></div>
+    </section>
+  </main>
+
+</section>
+
+<!-- Your app entry -->
+<script type="module" src="/src/main.js"></script>
+
+</body>
+</html>

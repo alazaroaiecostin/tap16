@@ -1,0 +1,436 @@
+:root {
+  --bg: #0f1115;
+  --panel: #161a22;
+  --panel-2: #1b2030;
+  --border: #2a2f3a;
+  --text: #c9d1d9;
+  --muted: #8b949e;
+  --accent: #3fb950;
+  --active: #58a6ff;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* Top Bar */
+#topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+#topbar .left,
+#topbar .right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#topbar button,
+#topbar select,
+#topbar input {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#topbar button:hover {
+  border-color: var(--active);
+}
+
+/* Workspace */
+#workspace {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: calc(100% - 42px);
+}
+
+/* Instruments */
+#instruments {
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+#instruments header {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  font-weight: bold;
+}
+
+#lanes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lane {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  padding: 6px;
+  border-radius: 4px;
+}
+
+#addLane {
+  margin: 6px;
+  padding: 6px;
+  background: var(--panel-2);
+  border: 1px dashed var(--border);
+  color: var(--text);
+  border-radius: 4px;
+}
+
+/* Editor */
+#editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Patterns */
+#patterns {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+#patterns header {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  align-items: center;
+}
+
+#arranger {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  overflow-x: auto;
+}
+
+.pattern-chip {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+
+.pattern-chip.active {
+  background: var(--active);
+  color: #000;
+}
+
+/* Grid */
+#gridWrap {
+  flex: 1;
+  overflow: auto;
+  min-height: 240px;
+}
+
+#grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  min-height: 120px;
+}
+
+.grid-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.lane-label {
+  width: 120px;
+  text-align: right;
+  padding-right: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  user-select: none;
+}
+
+.step {
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--border);
+  background: #0b0d12;
+  cursor: pointer;
+  position: relative;
+  border-radius: 2px;
+}
+
+.step.on {
+  background: var(--accent);
+}
+
+.step.active {
+  outline: 2px solid var(--active);
+}
+
+.step.beat {
+  border-left: 2px solid #444;
+}
+
+.step.bar {
+  border-left: 3px solid var(--active);
+}
+
+.velocity {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  pointer-events: none;
+  transition: height 0.05s linear;
+}
+
+#gridWrap {
+  flex: 1;
+  overflow: auto;
+  min-height: 200px;   /* 👈 prevents collapse */
+}
+
+#grid {
+  min-height: 120px;  /* 👈 grid always visible */
+}
+
+.step.active {
+  outline: 2px solid #58a6ff;
+  box-shadow: 0 0 6px rgba(88, 166, 255, 0.8);
+}
+
+.velocity {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  pointer-events: none;
+  transition: height 0.05s linear;
+}
+
+.step.playing {
+  outline: 2px solid var(--active);
+  box-shadow: 0 0 8px rgba(88, 166, 255, 0.6);
+}
+
+#playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--active);
+  pointer-events: none;
+  z-index: 5;
+}
+
+#arrangerTimeline {
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-top: 1px solid var(--border);
+}
+
+.arranger-block {
+  padding: 6px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.arranger-block:hover {
+  border-color: var(--active);
+}
+
+.pattern-chip.playing {
+  outline: 2px solid var(--accent);
+}
+
+.arranger-block {
+  padding: 6px 10px;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: grab;
+  user-select: none;
+}
+
+.arranger-block.dragging {
+  opacity: 0.4;
+}
+
+.arranger-block.dragover {
+  outline: 2px dashed var(--active);
+}
+
+.arranger-block.playing {
+  background: var(--active);
+  color: #000;
+}
+
+#lanes.dragover {
+  outline: 2px dashed var(--active);
+  background: rgba(88, 166, 255, 0.1);
+}
+
+.arranger-block {
+  padding: 6px 10px;
+  margin: 4px;
+  border-radius: 6px;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.arranger-block.active {
+  background: #00e5ff;
+  color: #000;
+  font-weight: bold;
+}
+
+#patterns button {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#patterns button:hover {
+  border-color: var(--active);
+}
+
+#editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+#patterns {
+  flex-shrink: 0;
+}
+
+#gridWrap {
+  flex: 1;
+  min-height: 200px;
+  overflow: auto;
+  background: #0b0d12;
+}
+
+#grid {
+  min-height: 160px;
+}
+
+.step {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #444;
+  background: #111;
+}
+.step.on {
+  background: var(--accent);
+}
+
+/* --- Pattern header visibility fix --- */
+#patterns {
+  z-index: 2;
+  position: relative;
+}
+
+#patterns header {
+  min-height: 34px;
+  z-index: 3;
+  position: relative;
+}
+
+#patterns header button {
+  min-width: 26px;
+  min-height: 26px;
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#newPattern,
+#dupPattern {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+}
+
+#newPattern:hover,
+#dupPattern:hover {
+  border-color: var(--active);
+}
+
+#patternSelect {
+  min-width: 80px;
+  height: 26px;
+}
+
+.lane button {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #222;
+  color: #ccc;
+  border: 1px solid #444;
+}
+
+.lane button.active {
+  background: #58a6ff;
+  color: #000;
+  border-color: #58a6ff;
+}
+
+@media (max-width: 900px) {
+  #workspace {
+    grid-template-columns: 1fr;
+  }
+
+  #instruments {
+    order: 2;
+    height: 35%;
+  }
+
+  #editor {
+    order: 1;
+    height: 65%;
+  }
+}
