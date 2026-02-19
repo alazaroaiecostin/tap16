@@ -1,11 +1,8 @@
-node -v
-npm -v
+Install node.js locally
 
-
+Commands to run:
 
 npm install
 
 npm run dev
 
-npm run build
-npm run preview
